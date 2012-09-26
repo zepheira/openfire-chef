@@ -2,7 +2,7 @@
 # Cookbook Name:: openfire
 # Recipe:: default
 #
-# Copyright 2012, YOUR_COMPANY_NAME
+# Copyright 2012, Leftbrained
 #
 # All rights reserved - Do Not Redistribute
 #
@@ -25,4 +25,15 @@ execute "tar" do
 end
 
 
-log "And now remember to visit the server on :9090 to run the openfire wizard - actually, that's not true. You'll have to boot it first"
+link  "/etc/init.d/openfire" do
+  to "/opt/openfire/bin/openfire"
+end
+
+service "openfire" do
+  supports :status => true, 
+           :stop => true
+  action [ :enable, :start ]
+end
+
+log "And now remember to visit the server on :9090 to run the openfire wizard."
+log "You'll also probably want to turn of anonymous sign-ups and whatnot."
