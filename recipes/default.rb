@@ -1,13 +1,3 @@
-#
-# Cookbook Name:: openfire
-# Recipe:: default
-#
-# Copyright 2012, Leftbrained
-#
-# All rights reserved - Do Not Redistribute
-#
-#
-
 include_recipe "java::default"
 
 source_tarball = "openfire_3_7_1.tar.gz"
