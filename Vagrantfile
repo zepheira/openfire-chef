@@ -14,6 +14,9 @@ Vagrant::Config.run do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.json = {
+        :java => {
+          "jdk_version" => '7',
+        },
     }
 
     chef.run_list = [
