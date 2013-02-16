@@ -1,5 +1,9 @@
 include_recipe "java::default"
 
+if node[:openfire][:database][:active]
+  include_recipe "openfire::database"
+end
+
 group node[:openfire][:group] do
   system true
 end

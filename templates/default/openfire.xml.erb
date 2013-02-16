@@ -16,5 +16,24 @@
     <interface><%= node[:openfire][:config][:network][:interface] %></interface>
   </network>
 <% end %>
+<% if node[:openfire][:database][:active] %>
+  <connectionProvider>
+    <className>org.jivesoftware.database.DefaultConnectionProvider</className>
+  </connectionProvider>
+  <database>
+    <defaultProvider>
+      <driver><%= node[:openfire][:config][:database][:driver] %></driver>
+      <serverURL><%= node[:openfire][:config][:database][:server_url] %></serverURL>
+      <username><%= node[:openfire][:database][:user] %></username>
+      <password><%= node[:openfire][:database][:password] %></password>
+      <testSQL>select 1</testSQL>
+      <testBeforeUse>true</testBeforeUse>
+      <testAfterUse>true</testAfterUse>
+      <minConnections>5</minConnections>
+      <maxConnections>25</maxConnections>
+      <connectionTimeout>1.0</connectionTimeout>
+    </defaultProvider>
+  </database>
+<% end %>
   <setup>true</setup>
 </jive>
