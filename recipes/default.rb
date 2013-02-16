@@ -34,6 +34,10 @@ link "#{node[:openfire][:home_dir]}/conf" do
   to '/etc/openfire'
 end
 
+template '/etc/openfire/openfire.xml' do
+  mode '0644'
+end
+
 link "#{node[:openfire][:home_dir]}/logs" do
   to '/var/log/openfire'
 end

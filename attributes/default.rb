@@ -9,3 +9,10 @@ default[:openfire][:user] = 'openfire'
 default[:openfire][:group] = 'openfire'
 
 default[:openfire][:pidfile] = '/var/run/openfire.pid'
+
+# by default, only enable secure admin port
+default[:openfire][:config][:admin_console][:port] = -1
+default[:openfire][:config][:admin_console][:secure_port] = 9091
+
+default[:openfire][:config][:locale] = 'en'
+default[:openfire][:config][:network][:interface] = nil
