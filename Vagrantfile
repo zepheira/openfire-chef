@@ -12,6 +12,15 @@ Vagrant::Config.run do |config|
   config.ssh.max_tries = 40
   config.ssh.timeout   = 120
 
+  # track all VM changes with git
+  config.vm.provision :shell, :path => 'Vagrantprovisioners/git_pre.sh'
+
+  # install ldap utils for debugging purposes
+  config.vm.provision :shell, :path => 'Vagrantprovisioners/ldap.sh'
+
+  # install "comfort" packages
+  config.vm.provision :shell, :path => 'Vagrantprovisioners/comfort.sh'
+
   config.vm.provision :chef_solo do |chef|
     chef.json = {
         :java => {
@@ -36,4 +45,7 @@ Vagrant::Config.run do |config|
 
     chef.log_level = :info
   end
+
+  # unconditionally check everything in to git
+  config.vm.provision :shell, :path => 'Vagrantprovisioners/git.sh'
 end
