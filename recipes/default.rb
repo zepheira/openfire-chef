@@ -28,6 +28,7 @@ bash "install_openfire" do
     tar xzf #{local_tarball_path}
     chown -R #{node[:openfire][:user]}:#{node[:openfire][:group]} #{node[:openfire][:home_dir]}
     mv #{node[:openfire][:home_dir]}/conf /etc/openfire
+    rm /etc/openfire/openfire.xml
     mv #{node[:openfire][:home_dir]}/logs /var/log/openfire
   EOH
   creates node[:openfire][:home_dir]
@@ -39,20 +40,17 @@ link "#{node[:openfire][:home_dir]}/conf" do
 end
 
 template '/etc/openfire/openfire.xml' do
-  mode '0644'
+  action :create_if_missing
+  mode '0600'
+  owner 'openfire'
 end
 
 link "#{node[:openfire][:home_dir]}/logs" do
   to '/var/log/openfire'
 end
 
-# ensure openfirectl is executable
-file "#{node[:openfire][:home_dir]}/bin/openfirectl" do
+cookbook_file "/etc/init.d/openfire" do
   mode '0755'
-end
-
-link  "/etc/init.d/openfire" do
-  to "#{node[:openfire][:home_dir]}/bin/openfirectl"
 end
 
 # on Debian/Ubuntu we use /etc/default instead of /etc/sysconfig
@@ -72,5 +70,8 @@ service "openfire" do
   action [ :enable, :start ]
 end
 
-log "And now remember to visit the server on :9090 to run the openfire wizard."
-log "You'll also probably want to turn of anonymous sign-ups and whatnot."
+admin_console = node[:openfire][:config][:admin_console]
+admin_port = (admin_console[:secure_port] == -1)? admin_console[:port] : admin_console[:secure_port]
+log "And now visit the server on :#{admin_port} to run the openfire wizard." do
+  action :nothing
+end
