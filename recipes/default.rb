@@ -30,6 +30,7 @@ bash "install_openfire" do
     mv #{node[:openfire][:home_dir]}/conf /etc/openfire
     rm /etc/openfire/openfire.xml
     mv #{node[:openfire][:home_dir]}/logs /var/log/openfire
+    mv #{node[:openfire][:home_dir]}/resources/security /etc/openfire
   EOH
   creates node[:openfire][:home_dir]
 end
@@ -39,14 +40,26 @@ link "#{node[:openfire][:home_dir]}/conf" do
   to '/etc/openfire'
 end
 
-template '/etc/openfire/openfire.xml' do
-  action :create_if_missing
-  mode '0600'
+link "#{node[:openfire][:home_dir]}/logs" do
+  to '/var/log/openfire'
+end
+
+link "#{node[:openfire][:home_dir]}/resources/security" do
+  to '/etc/openfire/security'
+end
+
+# this directory contains keys, so lock down its permissions
+directory '/etc/openfire/security' do
+  group 'openfire'
+  mode '0700'
   owner 'openfire'
 end
 
-link "#{node[:openfire][:home_dir]}/logs" do
-  to '/var/log/openfire'
+template '/etc/openfire/openfire.xml' do
+  action :create_if_missing
+  group 'openfire'
+  mode '0600'
+  owner 'openfire'
 end
 
 cookbook_file "/etc/init.d/openfire" do
