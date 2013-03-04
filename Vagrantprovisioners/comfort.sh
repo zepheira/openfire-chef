@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # install "comfort" packages
 
-yum install -y vim
+yum install -y mlocate vim
