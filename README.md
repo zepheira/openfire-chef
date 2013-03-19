@@ -10,6 +10,10 @@ The following Chef cookbooks should be installed:
 * database
 * postgresql
 
+## Supported Platforms
+* CentOS, Red Hat
+* Ubuntu (likely, but untested)
+
 ## Database
 
 This *should* still work using the built-in OpenFire database instead of using PostGreSQL. However this needs to be tested.
@@ -17,8 +21,11 @@ This *should* still work using the built-in OpenFire database instead of using P
 # Attributes
 All attributes are optional
 
+## Version
 * `node[:openfire][:source_tarball]`: currently defaults to `openfire_3_8_1.tar.gz`
     * This tarball will automatically be downloaded and installed
+
+## Installation
 * `node[:openfire][:user]`: the local user account to create and use to run the openfire process; defaults to `openfire`
     * also see `node[:openfire][:group]`, which also defaults to `openfire`
 * `node[:openfire][:base_dir]`: the location on the file system to install openfire
@@ -26,6 +33,8 @@ All attributes are optional
 * `node[:openfire][:config][:admin_console][:secure_port]`: Use your web browser to connect to this port after you have set up openfire for further configuration. This will require an https/SSL connection. Defaults to 9091.
 * `node[:openfire][:config][:locale]`: Defaults to `en`.
 * `node[:openfire][:config][:network][:interface]`: Defaults to `nil` (listen on all interfaces).
+
+## Database
 * `node[:openfire][:database][:type]`: currently only works with 'postgresql'. If you want to use the built-in database (untested), do not set this.
 * `node[:openfire][:database][:password]`: the database password for the Openfire user (required if database type is specified)
 * `node[:openfire][:database][:name]`: default `openfire`
