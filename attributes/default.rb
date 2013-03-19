@@ -1,7 +1,8 @@
-default[:openfire][:source_tarball] = 'openfire_3_8_0.tar.gz'
+default[:openfire][:source_tarball] = 'openfire_3_8_1.tar.gz'
 
 # precalculated checksums: `sha256sum openfire_v_v_v.tar.gz | cut -c1-16`
 checksums = {
+	'openfire_3_8_1.tar.gz' => '554dce3a1b0a0b88',
 	'openfire_3_8_0.tar.gz' => 'd5bef61a313ee41b'
 }
 
