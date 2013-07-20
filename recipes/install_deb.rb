@@ -9,8 +9,9 @@ end
 
 dpkg_package "openfire" do
   source local_deb_path
+  # don't downgrade or install same version, keep old conf when no default
+  options "-G -E --force-confdef --force-confold"
   action :install
-  not_if "dpkg -l openfire |grep '^ii' |grep ' #{node[:openfire][:version]} '"
 end
 
 template "#{node[:openfire][:config_dir]}/openfire.xml" do
