@@ -7,7 +7,7 @@
     <securePort><%= node[:openfire][:config][:admin_console][:secure_port] %></securePort>
   </adminConsole>
   <locale><%= node[:openfire][:config][:locale] %></locale>
-<% unless node[:openfire][:config][:network][:interface].nil? %>
+<% unless node[:openfire][:config][:network][:interface].nil? -%>
   <!--
     Network settings. By default, Openfire will bind to all network interfaces.
     Alternatively, you can specify a specific network interfaces that the server
@@ -17,8 +17,8 @@
   <network>
     <interface><%= node[:openfire][:config][:network][:interface] %></interface>
   </network>
-<% end %>
-<% if node[:openfire][:database][:active] %>
+<% end -%>
+<% if node[:openfire][:database][:active] -%>
   <connectionProvider>
     <className>org.jivesoftware.database.DefaultConnectionProvider</className>
   </connectionProvider>
@@ -36,5 +36,9 @@
       <connectionTimeout>1.0</connectionTimeout>
     </defaultProvider>
   </database>
-<% end %>
+<% else -%>
+  <connectionProvider>
+    <className>org.jivesoftware.database.EmbeddedConnectionProvider</className>
+  </connectionProvider>  
+<% end -%>
 </jive>
