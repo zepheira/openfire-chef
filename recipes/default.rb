@@ -15,8 +15,8 @@ user node[:openfire][:user] do
   shell '/bin/sh'
 end
 
-when node[:openfire][:install_type]
-case "deb"
+case node[:openfire][:install_type]
+when "deb"
   include_recipe "openfire::install_deb"
 else
   include_recipe "openfire::install_tar"
